@@ -1,0 +1,28 @@
+remote access jupyter notebook
+
+参考：
+https://github.com/LangilleLab/lab_information/wiki/Jupyter-Notebook-Server-SSH-Tunneling
+
+Jupyter Notebook Server SSH Tunneling
+karlrl edited this page on 11 Apr 2018 · 1 revision
+A Jupyter notebook server can be accessed using SSH tunnelling. Since a Jupyter notebook server belongs to the user that started it, you'll need to make a few changes to its configuration before proceeding.
+First, edit your notebook configuration. It lives in ~/.jupyter/jupyter_notebook_config.py (if it's not there you'll want to install and start Jupyter once to create it):
+## The port the notebook server will listen on.
+## It's probably best to consult with other lab members before picking a port 
+## number--most numbers in the 9000s should work.
+c.NotebookApp.port = 9000
+
+## The IP address the notebook server will listen on.
+c.NotebookApp.ip = '0.0.0.0'
+
+Next, start the notebook server in the directory where your notebooks live, or at least in your user directory structure (~/):
+~/my_notebooks$ jupyter notebook
+
+Once the server has been started you can SSH tunnel to the port you picked on the server (e.g. 9000 above):
+ssh -N -L 9000:SERVER_ADDRESS:9000 USER@SERVER_ADDRESS
+
+Finally, visit the URL in your web browser: http://localhost:9000/
+
+
+在windows上通过Cmder，运行
+ssh -N -L 9000:10.10.108.147:9000 luq@10.10.108.147
